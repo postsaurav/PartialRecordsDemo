@@ -1,24 +1,50 @@
 page 50000 PerformanceTesting
 {
-    PageType = List;
+    PageType = Card;
     ApplicationArea = All;
-    UsageCategory = Lists;
+    UsageCategory = Administration;
 
-    actions
+    layout
     {
-        area(Processing)
+        area(Content)
         {
-            action(TestLoop)
+            field(LblLegacyCode; LegacyCodeLbl)
             {
                 ApplicationArea = All;
-                Caption = 'Calculate Totals';
-                ToolTip = 'Calculate Totals';
-                Image = Totals;
-                Promoted = true;
-                PromotedIsBig = true;
-                PromotedOnly = true;
-                RunObject = codeunit PerformanceTesting;
+                Caption = 'Legacy Code';
+                ToolTip = 'Executes the Legacy Code';
+                trigger OnDrillDown()
+                begin
+                    PerformanceTesting.LegacyCode();
+                end;
+            }
+
+            field(LblAutoCalcFields; AutoCalcFieldsLbl)
+            {
+                ApplicationArea = All;
+                Caption = 'Legacy Code - With Auto CalcFields';
+                ToolTip = 'Executes the Legacy Code - With Auto CalcFields';
+                trigger OnDrillDown()
+                begin
+                    PerformanceTesting.LegacyCodewithAutoCalcFields();
+                end;
+            }
+            field(LblPartialRecords; PartialRecordsLbl)
+            {
+                ApplicationArea = All;
+                Caption = 'Legacy Code - With Partial Records';
+                ToolTip = 'Executes the Legacy Code - With Partial Records';
+                trigger OnDrillDown()
+                begin
+                    PerformanceTesting.LegacyCodewithPartialRecords();
+                end;
             }
         }
     }
+
+    var
+        LegacyCodeLbl: Label 'Legacy Code';
+        AutoCalcFieldsLbl: Label 'Legacy Code - With Auto CalcFields';
+        PartialRecordsLbl: Label 'Legacy Code - With Partial Records';
+        PerformanceTesting: Codeunit PerformanceTesting;
 }
